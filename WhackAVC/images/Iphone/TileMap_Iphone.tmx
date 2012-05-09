@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="15" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="gride12" tilewidth="32" tileheight="32">
+  <image source="gride12.png" width="480" height="320"/>
+ </tileset>
+ <tileset firstgid="151" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="meta_tiles.png" width="67" height="34"/>
+  <tile id="0">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Collectable" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Background" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJydztciFQAAANDrD+xNlE32qMjKHtkjDTuzQlGEsvce3+s8+AIP5/0EBQKBgicKJoRQwggngkiiiCaGWOKIJ4FEnpFEMs95QQqppJFOBplkkU0OL8klj/zHRyFFFFNCKWW84jVvKKeCt1RSRTU11PKOOuppoJEmmmmhlTbaeU8HnXTRTQ+99NHPAIN8YIiPfOIzXxhmhFHGGGeCSb4yxTQzzDLHPN/4zg8WWGSJn/ximRV+84dV1vjLOhts8o//bLHNDrvssc8BhxxxzAmnnHHOBZdccc0Nt9xxzwP8RS51
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="15" height="10">
+  <object name="SpawnPoint" x="240" y="176"/>
+ </objectgroup>
+ <layer name="Foreground" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4D6AAACWAAB
+  </data>
+ </layer>
+ <layer name="Meta" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAfTKcQo5tFiI1sJzY5QmKE9GID2PTiU4NLHpcaQuFBbTeTGs7kYgD9PSXB
+  </data>
+ </layer>
+</map>
