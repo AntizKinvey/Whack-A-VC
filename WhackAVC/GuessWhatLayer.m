@@ -47,6 +47,9 @@ ALuint _soundEffectID;
 		//Call to a function to open connection to database
         [_dbmanager openDB];
         
+        
+        _dbmanager._topPhrase = [[[NSString alloc] init] autorelease];
+        
 		//Add a background Image to the scene
         CCSprite *backgroundImage = [CCSprite spriteWithFile:@"guesswhat.png" 
                                                         rect:CGRectMake(0, 0, 480, 320)];
@@ -90,7 +93,7 @@ ALuint _soundEffectID;
     // Choose one of the touches to work with
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
-    location = [[CCDirector sharedDirector] convertToGL:location];
+    [[CCDirector sharedDirector] convertToGL:location];
     
     [self unschedule:@selector(countDown:)];
     [[SimpleAudioEngine sharedEngine] stopEffect:_soundEffectID];
@@ -106,8 +109,6 @@ ALuint _soundEffectID;
 	// cocos2d will automatically release all the children (Label)
 	
 	// don't forget to call "super dealloc"
-    _dbmanager._topPhrase = nil;
-    [_dbmanager._topPhrase release];
     
 	[super dealloc];
 }

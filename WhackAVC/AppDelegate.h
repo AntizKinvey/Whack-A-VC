@@ -12,7 +12,7 @@
 
 @class RootViewController;
 
-@interface AppDelegate : NSObject <UIApplicationDelegate, KCSEntityDelegate, KCSPersistableDelegate, FBSessionDelegate> {
+@interface AppDelegate : NSObject <UIApplicationDelegate, FBSessionDelegate> {
 	UIWindow			*window;
 	RootViewController	*viewController;
     

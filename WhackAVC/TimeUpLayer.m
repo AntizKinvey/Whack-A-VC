@@ -85,7 +85,7 @@ extern int lives;
     // Choose one of the touches to work with
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
-    location = [[CCDirector sharedDirector] convertToGL:location];
+    [[CCDirector sharedDirector] convertToGL:location];
     
     [self unschedule:@selector(countDown:)];
     _showTimeUpScreen = FALSE;

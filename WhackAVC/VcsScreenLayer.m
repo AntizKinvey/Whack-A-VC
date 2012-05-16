@@ -11,8 +11,9 @@
 #import "VcsScreenLayer.h"
 #import "HelloWorldLayer.h"
 #import "Reachability.h"
-
 #import "AppDelegate.h"
+#import "JSON.h"
+#import "Accounts/ACAccount.h"
 
 // VcsScreenLayer implementation
 @implementation VcsScreenLayer
@@ -71,7 +72,7 @@ BOOL _once = FALSE;
 
 int _touchCount = 0;
 
-extern NSMutableArray *arrayOfAccounts;
+extern NSArray *arrayOfAccounts;
 
 
 int _noOfElementsInMyVCs = 0;
@@ -106,18 +107,18 @@ int _noOfElementsInAllVCs = 0;
         [_dbmanager openDB];
         
         //Arrays that hold VC profile images, firm names, whack count, names and twitter handles of VC's whacked by user
-        _dbmanager._myVCSnapsFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._myVCFirmsFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._myVCWhackCountFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._myVCNamesFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._myVCTwitterHandleFromDB = [[NSMutableArray alloc] init];
+        _dbmanager._myVCSnapsFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._myVCFirmsFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._myVCWhackCountFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._myVCNamesFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._myVCTwitterHandleFromDB = [[[NSMutableArray alloc] init] autorelease];
         
         //Arrays that hold VC profile images, firm names, whack count, names and twitter handles of all VC's
-        _dbmanager._allVCSnapsFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._allVCFirmsFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._allVCWhackCountFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._allVCNamesFromDB = [[NSMutableArray alloc] init];
-        _dbmanager._allVCTwitterHandleFromDB = [[NSMutableArray alloc] init];
+        _dbmanager._allVCSnapsFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._allVCFirmsFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._allVCWhackCountFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._allVCNamesFromDB = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._allVCTwitterHandleFromDB = [[[NSMutableArray alloc] init] autorelease];
         
         //Sql query to retrieve My VC's 
         NSString *myVClist = [[NSString alloc] initWithString:@"SELECT v.vcsnaps,v.vcfirm,w.whackcount,v.vcname,v.vctwhandle FROM VClist v JOIN Whacklist w WHERE w.vcid = v.vcid and w.whackcount > 0 ORDER BY v.vcname"];
@@ -140,9 +141,10 @@ int _noOfElementsInAllVCs = 0;
         //Declare an array that holds whackCount of All VC's
         int _whackCountArrayInAllVCs[_noOfElementsInAllVCs];
         
-        for(int i=0; i<[_dbmanager._allVCWhackCountFromDB count]; i++)
+        //Initialize the array
+        for(int j=0; j<[_dbmanager._allVCWhackCountFromDB count]; j++)
         {
-            _whackCountArrayInAllVCs[i] = 0;
+            _whackCountArrayInAllVCs[j] = 0;
         }
         
         //Convert String to Integer Value of Whacks for All VC's
@@ -184,11 +186,17 @@ int _noOfElementsInAllVCs = 0;
         //Declare an array that holds whackCount of My VC's
         int _whackCountArrayInMyVCs[_noOfElementsInMyVCs];
         
+        //Initialize the array
+        for(int j=0; j<[_dbmanager._myVCWhackCountFromDB count]; j++)
+        {
+            _whackCountArrayInMyVCs[j] = 0;
+        }
+        
         //Convert String to Integer Value of Whacks for My VC's
         for(int i=0; i<[_dbmanager._myVCWhackCountFromDB count]; i++)
         {
             NSString *_myVCWhacks = [[NSString alloc] initWithString:[_dbmanager._myVCWhackCountFromDB objectAtIndex:i]];
-            _whackCountArrayInMyVCs[i] = [_myVCWhacks integerValue];
+            _whackCountArrayInMyVCs[i] = [_myVCWhacks intValue];
             [_myVCWhacks release];
         }
         
@@ -197,7 +205,7 @@ int _noOfElementsInAllVCs = 0;
         {
             for(int j=0; j<(_noOfElementsInMyVCs-1)-i; j++)
             {
-                if(_whackCountArrayInMyVCs[j] < _whackCountArrayInMyVCs[j+1])
+                if(_whackCountArrayInMyVCs[j] < (_whackCountArrayInMyVCs[j+1]))
                 {
                     //Swap the elements of array
                     int temp = _whackCountArrayInMyVCs[j];
@@ -702,6 +710,7 @@ int _noOfElementsInAllVCs = 0;
         }
         
         [twit presentModalViewController:tweetViewController animated:YES];
+        [tweetViewController release];
         
         if ([TWTweetComposeViewController canSendTweet]) 
         {
@@ -743,7 +752,7 @@ int _noOfElementsInAllVCs = 0;
 -(void)updateTableview
 {
     //Get the twitter account and the corresponding user id and username
-    ACAccount *twitterAccount = [ arrayOfAccounts objectAtIndex:0];
+    ACAccount *twitterAccount = [arrayOfAccounts objectAtIndex:0];
     NSString *twUserID = [[twitterAccount accountProperties] objectForKey:@"user_id"];
     NSString *twUserName = twitterAccount.username;
     
@@ -751,6 +760,7 @@ int _noOfElementsInAllVCs = 0;
     NSString *urlPath = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1/users/profile_image?user_id=%@&size=bigger",twUserID];
     NSURL *url = [NSURL URLWithString:urlPath];
     NSData *data = [NSData dataWithContentsOfURL:url];
+    [urlPath release];
     
     //Download the profile image to local system
     NSString *twImageName = [[NSString alloc] initWithFormat:@"%@.jpg",twUserID];
@@ -771,6 +781,7 @@ int _noOfElementsInAllVCs = 0;
     
     [[[KCSClient sharedClient] currentUser] saveWithDelegate:self];
     
+    [twImageName release];
 }
 
 //Functionality to show all VC's and My VC's
@@ -835,6 +846,7 @@ int _noOfElementsInAllVCs = 0;
 /*                                     Facebook Delegate Methods                                                   */
 /*******************************************************************************************************************/
 
+//This method is notified when the request loads and completes successfully
 - (void)request:(FBRequest *)request didLoad:(id)result {  
     NSDictionary* hash = result;
     //Get the facebook username
@@ -880,18 +892,46 @@ int _noOfElementsInAllVCs = 0;
         [[[KCSClient sharedClient] currentUser] setValue:fbImageName forAttribute:@"fbProfileImage"];
         //Save the facebook profile image of user to BLOB service kinvey
         [KCSResourceService saveLocalResource:savedImagePath withDelegate:self];
+        
+        [fbImageName release];
     }
     
     [[[KCSClient sharedClient] currentUser] saveWithDelegate:self];
 }
 
-
+//This method is notified when the request receives response successfully
 - (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
 
 }
 
+//This method is notified when the request fails
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
 
+}
+
+//This delegate method is called when the user logs in to facebook
+- (void)fbDidLogin {
+
+}
+
+//This delegate method is called when the user logs out of facebook
+- (void)fbDidLogout {
+    
+}
+
+//This delegate method is notified when the session becomes invalidated
+- (void)fbSessionInvalidated {
+    
+}
+
+- (void)fbDidExtendToken:(NSString*)accessToken
+               expiresAt:(NSDate*)expiresAt {
+    
+}
+
+//This delegate method is called when the user cancels login to facebook
+- (void)fbDidNotLogin:(BOOL)cancelled {
+    
 }
 
 /*******************************************************************************************************************/
@@ -912,6 +952,8 @@ int _noOfElementsInAllVCs = 0;
     
 }
 
+// KINVEY SPECIFIC NOTE
+// This is the delegate called when a collection completes with successful operation
 - (void)collection:(KCSCollection *)collection didCompleteWithResult:(NSArray *)result
 {
     
@@ -924,11 +966,14 @@ int _noOfElementsInAllVCs = 0;
     
 }
 
+// KINVEY SPECIFIC NOTE
+// This is the delegate called when a resource upload to or download from Kinvey successfully completes
 -(void)resourceServiceDidCompleteWithResult:(KCSResourceResponse *)result
 {
     
 }
-
+// KINVEY SPECIFIC NOTE
+// This is the delegate called when a resource upload to or download from Kinvey fails
 - (void)resourceServiceDidFailWithError:(NSError *)error
 {
     
@@ -943,37 +988,12 @@ int _noOfElementsInAllVCs = 0;
     
 	// don't forget to call "super dealloc"
     
-    //Release all the objects allocated
-    _dbmanager._myVCSnapsFromDB = nil;
-    _dbmanager._myVCFirmsFromDB = nil;
-    _dbmanager._myVCWhackCountFromDB = nil;
-    _dbmanager._myVCNamesFromDB = nil;
-    _dbmanager._myVCTwitterHandleFromDB = nil;
-    
-    _dbmanager._allVCSnapsFromDB = nil;
-    _dbmanager._allVCFirmsFromDB = nil;
-    _dbmanager._allVCWhackCountFromDB = nil;
-    _dbmanager._allVCNamesFromDB = nil;
-    _dbmanager._allVCTwitterHandleFromDB = nil;
-    
-    [_dbmanager._myVCSnapsFromDB release];
-    [_dbmanager._myVCFirmsFromDB release];
-    [_dbmanager._myVCWhackCountFromDB release];
-    [_dbmanager._myVCNamesFromDB release];
-    [_dbmanager._myVCTwitterHandleFromDB release];
-    
-    [_dbmanager._allVCSnapsFromDB release];
-    [_dbmanager._allVCFirmsFromDB release];
-    [_dbmanager._allVCWhackCountFromDB release];
-    [_dbmanager._allVCNamesFromDB release];
-    [_dbmanager._allVCTwitterHandleFromDB release];
     
     //Call to a function to close database
     [_dbmanager closeDB];
+    //Release all the objects allocated
     [_dbmanager release];
-    
     [facebook release];
-    
     
 	[super dealloc];
 }

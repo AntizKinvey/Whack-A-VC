@@ -229,6 +229,10 @@ ALuint _powerUpID;
         //Call to a function to open a connection to database
         [_dbmanager openDB];
         
+        _dbmanager._retrieveArray = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._retrieveImageIdArray = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._whackedAudioPaths = [[[NSMutableArray alloc] init] autorelease];
+        
         //Total number of game play images present in local cache
         _totalNoOfImagesFromDB = [_dbmanager retrieveVCImagesPaths];
         
@@ -358,8 +362,8 @@ ALuint _powerUpID;
         _track5=0;
         
         //Arrays that hold VC firm names and VC names relative to VC Id's
-        _dbmanager._retrieveImageFirmArray = [[NSMutableArray alloc] init];
-        _dbmanager._retrieveVCNameArray = [[NSMutableArray alloc] init];
+        _dbmanager._retrieveImageFirmArray = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._retrieveVCNameArray = [[[NSMutableArray alloc] init] autorelease];
         
         //Since a maximum of only 15 VC's are selected to display the condition checks between [0...14]
         for(int i=0; i<15; i++)
@@ -2149,17 +2153,6 @@ ALuint _powerUpID;
 	// in case you have something to dealloc, do it in this method
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
-    
-    _dbmanager._retrieveArray = nil;
-    [_dbmanager._retrieveArray release];
-    _dbmanager._retrieveImageIdArray = nil;
-    [_dbmanager._retrieveImageIdArray release];
-    _dbmanager._whackedAudioPaths = nil;
-    [_dbmanager._whackedAudioPaths release];
-    _dbmanager._retrieveImageFirmArray = nil;
-    [_dbmanager._retrieveImageFirmArray release];
-    _dbmanager._retrieveVCNameArray = nil;
-    [_dbmanager._retrieveVCNameArray release];
     
     //Call to a function to close database
     [_dbmanager closeDB];

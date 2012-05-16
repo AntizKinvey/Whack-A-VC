@@ -42,8 +42,6 @@
 
 @property (nonatomic, retain) ACAccountStore *account;
 
--(void) closeWindow;
-
 -(void) saveWhackCountsToKinvey;
 
 -(void) checkNetworkConnectivity;

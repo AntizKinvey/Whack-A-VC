@@ -308,7 +308,6 @@
 		7882DF0515259BF100D2092B /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7882DF0315259BF100D2092B /* Accounts.framework */; };
 		7882DF0615259BF100D2092B /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7882DF0415259BF100D2092B /* Twitter.framework */; };
 		7882DF0A15259C4200D2092B /* TwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7882DF0915259C4200D2092B /* TwitterViewController.m */; };
-		7883B924150DBBF400A055C3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7883B923150DBBF400A055C3 /* Icon.png */; };
 		7883BF6C1512F215004C5CBB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7883BF671512F215004C5CBB /* CoreTelephony.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7883BF6D1512F215004C5CBB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7883BF681512F215004C5CBB /* libz.dylib */; };
 		7883BF6E1512F215004C5CBB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7883BF691512F215004C5CBB /* MobileCoreServices.framework */; };
@@ -2014,7 +2013,6 @@
 				7889164314FDDFD400716C63 /* Icon.png in Resources */,
 				7889164514FDDFD400716C63 /* Icon@2x.png in Resources */,
 				7889164814FDDFD400716C63 /* iTunesArtwork in Resources */,
-				7883B924150DBBF400A055C3 /* Icon.png in Resources */,
 				7887A4521529AD63009279EA /* backgroundmusic.mp3 in Resources */,
 				788663A4152ABF06007B47E1 /* sound1.wav in Resources */,
 				788663A5152ABF06007B47E1 /* sound2.wav in Resources */,
@@ -2465,8 +2463,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Rega Interactive";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rega Interactive";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2480,8 +2478,8 @@
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = "";
-				PROVISIONING_PROFILE = "5404412F-E84F-4447-9B99-0388309F2FA9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5404412F-E84F-4447-9B99-0388309F2FA9";
+				PROVISIONING_PROFILE = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2492,8 +2490,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Rega Interactive";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rega Interactive";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -2503,8 +2501,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "5404412F-E84F-4447-9B99-0388309F2FA9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5404412F-E84F-4447-9B99-0388309F2FA9";
+				PROVISIONING_PROFILE = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2514,8 +2512,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Rega Interactive";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rega Interactive";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2537,8 +2535,8 @@
 					"-lz",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5404412F-E84F-4447-9B99-0388309F2FA9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5404412F-E84F-4447-9B99-0388309F2FA9";
+				PROVISIONING_PROFILE = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2548,8 +2546,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Rega Interactive";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rega Interactive";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Srikanth Srinivasaiah (VM343XL6HJ)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2570,8 +2568,8 @@
 					"-lz",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5404412F-E84F-4447-9B99-0388309F2FA9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5404412F-E84F-4447-9B99-0388309F2FA9";
+				PROVISIONING_PROFILE = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9F09DE7B-09D2-49E7-BB09-3DE1A4EA3FB9";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

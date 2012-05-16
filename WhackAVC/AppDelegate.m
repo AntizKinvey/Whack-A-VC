@@ -131,13 +131,13 @@
                                          errorEnabled:YES];
         // Ping Kinvey
         [KCSPing pingKinveyWithBlock:^(KCSPingResult *result) {
-            NSString *title;
+//            NSString *title;
             
             if (result.pingWasSuccessful){
-                title = [NSString stringWithString:@"Kinvey Ping Success :)"];
+//                title = [NSString stringWithString:@"Kinvey Ping Success :)"];
                 
             } else {
-                title = [NSString stringWithString:@"Kinvey Ping Failed :("];
+//                title = [NSString stringWithString:@"Kinvey Ping Failed :("];
                 
             }
         }];
@@ -169,11 +169,31 @@
     return [facebook handleOpenURL:url]; 
 }
 
+//This delegate method is called when the user logs in to facebook
 - (void)fbDidLogin {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
+}
+
+//This delegate method is called when the user logs out of facebook
+- (void)fbDidLogout {
+    
+}
+
+//This delegate method is notified when the session becomes invalidated
+- (void)fbSessionInvalidated {
+    
+}
+
+- (void)fbDidExtendToken:(NSString*)accessToken
+               expiresAt:(NSDate*)expiresAt {
+    
+}
+
+//This delegate method is called when the user cancels login to facebook
+- (void)fbDidNotLogin:(BOOL)cancelled {
     
 }
 

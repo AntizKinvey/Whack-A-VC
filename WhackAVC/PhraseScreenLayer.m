@@ -112,7 +112,7 @@ ALuint _soundEffectID;//Sound Effect ID
     // Choose one of the touches to work with
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
-    location = [[CCDirector sharedDirector] convertToGL:location];
+    [[CCDirector sharedDirector] convertToGL:location];
     
     [self unschedule:@selector(countDown:)];
     [[SimpleAudioEngine sharedEngine] stopEffect:_soundEffectID];

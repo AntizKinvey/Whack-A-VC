@@ -408,8 +408,6 @@ int no_Of_Rows_In_User_Table = 0;
     NSString *qsql = @"SELECT vcphoto,vcid FROM VClist";
     sqlite3_stmt *statement; 
     
-    _retrieveArray = [[NSMutableArray alloc] init];
-    _retrieveImageIdArray = [[NSMutableArray alloc] init];
     
     if(sqlite3_prepare_v2(db,[qsql UTF8String],-1,&statement,nil) == SQLITE_OK)
     { 
@@ -475,7 +473,7 @@ int no_Of_Rows_In_User_Table = 0;
     NSString *qsql = @"SELECT audioname FROM Audiolist";
     sqlite3_stmt *statement; 
     
-    _whackedAudioPaths = [[NSMutableArray alloc] init];
+//    _whackedAudioPaths = [[NSMutableArray alloc] init];
     
     if(sqlite3_prepare_v2(db,[qsql UTF8String],-1,&statement,nil) == SQLITE_OK)
     { 
@@ -550,7 +548,7 @@ int no_Of_Rows_In_User_Table = 0;
             NSString *field1Str = [[NSString alloc] initWithUTF8String:field1];
             NSString *str = [[NSString alloc] initWithFormat:@"%@",field1Str];
             
-            _topPhrase = [[NSString alloc] initWithString:str];
+            _topPhrase = [NSString stringWithString:str];
             
             [field1Str release];
             [str release];

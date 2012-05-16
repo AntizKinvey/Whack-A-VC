@@ -18,7 +18,7 @@
 
 #import "FBConnect.h"
 
-@interface VcsScreenLayer : CCLayer <FBSessionDelegate, FBDialogDelegate, FBRequestDelegate, KCSResourceDelegate, KCSEntityDelegate, KCSPersistableDelegate>
+@interface VcsScreenLayer : CCLayer <FBSessionDelegate, FBDialogDelegate, FBRequestDelegate, KCSResourceDelegate, KCSPersistableDelegate>
 {
     DBManager *_dbmanager;
     

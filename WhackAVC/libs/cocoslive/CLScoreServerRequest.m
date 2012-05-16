@@ -76,9 +76,9 @@
 	// it's not a call for rank
 	reqRankOnly = NO;
 	
-	NSString *device = @"";
+//	NSString *device = @"";
 	if( flags & kQueryFlagByDevice )
-		device = [[UIDevice currentDevice] uniqueIdentifier];
+//		device = [[UIDevice currentDevice] uniqueIdentifier];
 	
 	// arguments:
 	//  query: type of query
@@ -86,26 +86,26 @@
 	//  offset: offset of the scores
 	//  flags: bring only country scores, world scores, etc.
 	//  category: string user defined string used to filter
-	NSString *url= [NSString stringWithFormat:@"%@?gamename=%@&querytype=%d&offset=%d&limit=%d&flags=%d&category=%@&device=%@",
-					SCORE_SERVER_REQUEST_URL,
-					gameName,
-					type,
-					offset,
-					limit,
-					flags,
-					[category stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
-					device
-					];
+//	NSString *url= [NSString stringWithFormat:@"%@?gamename=%@&querytype=%d&offset=%d&limit=%d&flags=%d&category=%@&device=%@",
+//					SCORE_SERVER_REQUEST_URL,
+//					gameName,
+//					type,
+//					offset,
+//					limit,
+//					flags,
+//					[category stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
+//					device
+//					];
 	
 	//	NSLog(@"%@", url);
 	
-	NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString:url]
-										   cachePolicy:NSURLRequestUseProtocolCachePolicy
-									   timeoutInterval:10.0];
+//	NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString:url]
+//										   cachePolicy:NSURLRequestUseProtocolCachePolicy
+//									   timeoutInterval:10.0];
 	
 	// create the connection with the request
 	// and start loading the data
-	self.connection=[NSURLConnection connectionWithRequest:request delegate:self];
+//	self.connection=[NSURLConnection connectionWithRequest:request delegate:self];
 	if (! connection_)
 		return NO;
 		

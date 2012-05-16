@@ -127,37 +127,37 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
         _blobDetails = [[KCSBlobDetails alloc] init];
         
         //Blob Array that consists of the Resources names that are to be downloaded from Kinvey backend
-        _blobDetails.blobArray = [[NSMutableArray alloc] init];
+        _blobDetails.blobArray = [[[NSMutableArray alloc] init] autorelease];
         
         //Blob Array that consists of the timestamp of Resources that are to be downloaded from Kinvey backend
-        _blobDetails.lastModifiedArray = [[NSMutableArray alloc] init];
+        _blobDetails.lastModifiedArray = [[[NSMutableArray alloc] init] autorelease];
         
         //Create an object of KCSPhrases
         _phraseDetails = [[KCSPhrases alloc] init];
         
         //Phrases Array that consists of the Resources names that are to be downloaded from Kinvey backend
-        _phraseDetails.phraseArrayFromKinvey = [[NSMutableArray alloc] init];
+        _phraseDetails.phraseArrayFromKinvey = [[[NSMutableArray alloc] init] autorelease];
         
         //Create an object of KCSVCDetails
         _vcDetails = [[KCSVCDetails alloc] init];
         
         //Array of VC Ids retrieved from VC Details collection from Kinvey
-        _vcDetails.vcIdArrayFromKinvey = [[NSMutableArray alloc] init];
+        _vcDetails.vcIdArrayFromKinvey = [[[NSMutableArray alloc] init] autorelease];
         
         //Array of VC Names retrieved from VC Details collection from Kinvey
-        _vcDetails.vcNameArrayFromKinvey = [[NSMutableArray alloc] init];
+        _vcDetails.vcNameArrayFromKinvey = [[[NSMutableArray alloc] init] autorelease];
         
         //Array of VC Firm names retrieved from VC Details collection from Kinvey
-        _vcDetails.vcFirmArrayFromKinvey = [[NSMutableArray alloc] init];
+        _vcDetails.vcFirmArrayFromKinvey = [[[NSMutableArray alloc] init] autorelease];
         
         //Array of VC game play images retrieved from VC Details collection from Kinvey
-        _vcDetails.vcInGamePlayArrayFromKinvey = [[NSMutableArray alloc] init];
+        _vcDetails.vcInGamePlayArrayFromKinvey = [[[NSMutableArray alloc] init] autorelease];
         
         //Array of VC profile images retrieved from VC Details collection from Kinvey
-        _vcDetails.vcInProfileArrayFromKinvey = [[NSMutableArray alloc] init];
+        _vcDetails.vcInProfileArrayFromKinvey = [[[NSMutableArray alloc] init] autorelease];
         
         //Array of VC Twitter handles retrieved from VC Details collection from Kinvey
-        _vcDetails.vcTwitterArrayFromKinvey = [[NSMutableArray alloc] init];
+        _vcDetails.vcTwitterArrayFromKinvey = [[[NSMutableArray alloc] init] autorelease];
         
         
         
@@ -766,6 +766,8 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
             }
         }
         
+        [date_formater1 release];
+        [date_formater2 release];
         //Total number of Resources to be downloaded
         _noOfResourcesToDownload = [_blobDetails.blobArray count] + [_downloadArray count];
         
@@ -847,6 +849,8 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
                         
                         //Insert the details to Audiolist of the files that are downloaded
                         [dbmanager insertRecordIntoAudioTable:@"Audiolist" withField1:@"audioid" field1Value:audioid andField2:@"audioname" field2Value:outFile];
+                        
+                        [audioid release];
                     }
                     
                     _noOfRowsInMetaDataFromLocalDB++;
@@ -854,6 +858,8 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
                     
                     //Insert details of resources to Metadata table to keep track of the resources that are downloaded
                     [dbmanager insertRecordIntoMetaDataTable:@"MetaData" withField1:@"resourceId" field1Value:resourceId andField2:@"resourceName" field2Value:[_blobDetails.blobArray objectAtIndex:i] andField3:@"lastModifiedTime" field3Value:[_blobDetails.lastModifiedArray objectAtIndex:i]];
+                    
+                    [resourceId release];
                 }
             }
             
@@ -873,6 +879,8 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
                         
                         //Insert the details to Audiolist of the files that are downloaded
                         [dbmanager insertRecordIntoAudioTable:@"Audiolist" withField1:@"audioid" field1Value:audioid andField2:@"audioname" field2Value:outFile];
+                        
+                        [audioid release];
                     }
                     
                     //Update details of resources to Metadata table to keep track of the resources that are downloaded
@@ -964,14 +972,8 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
     [dbmanager release];
     
     [_blobDetails release];
-    _blobDetails.blobArray = nil;
-    [_blobDetails.blobArray release];
-    _blobDetails.lastModifiedArray = nil;
-    [_blobDetails.lastModifiedArray release];
     
     [_phraseDetails release];
-    _phraseDetails.phraseArrayFromKinvey = nil;
-    [_phraseDetails.phraseArrayFromKinvey release];
     
     _downloadArray = nil;
     [_downloadArray release];
@@ -980,19 +982,6 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
     [_downloadResourceTimeArray release];
     
     [_vcDetails release];
-    _vcDetails.vcIdArrayFromKinvey = nil;
-    [_vcDetails.vcIdArrayFromKinvey release];
-    _vcDetails.vcNameArrayFromKinvey = nil;
-    [_vcDetails.vcNameArrayFromKinvey release];
-    _vcDetails.vcFirmArrayFromKinvey = nil; 
-    [_vcDetails.vcFirmArrayFromKinvey release];
-    _vcDetails.vcInGamePlayArrayFromKinvey = nil;
-    [_vcDetails.vcInGamePlayArrayFromKinvey release];
-    _vcDetails.vcInProfileArrayFromKinvey = nil;
-    [_vcDetails.vcInProfileArrayFromKinvey release];
-    _vcDetails.vcTwitterArrayFromKinvey = nil;
-    [_vcDetails.vcTwitterArrayFromKinvey release];
-
 	// don't forget to call "super dealloc"
 	[super dealloc];
 }

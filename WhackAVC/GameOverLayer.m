@@ -17,6 +17,8 @@
 #import "Reachability.h"
 #import "AppDelegate.h"
 #import "KCSWhacks.h"
+#import "JSON.h"
+#import "Accounts/ACAccount.h"
 
 // GameOverLayer implementation
 @implementation GameOverLayer
@@ -92,7 +94,7 @@ UIViewController *btnView;
 
 extern NSString *_kinveyUserId;
 
-NSMutableArray *arrayOfAccounts;
+NSArray *arrayOfAccounts;
 
 BOOL _connected = FALSE;
 BOOL _saveFbUserDetails = FALSE;
@@ -145,12 +147,12 @@ int _whackArrayFromTemp[15];
         _dbmanager._vcTwitterHandleArrayFromDB = [[[NSMutableArray alloc] init] autorelease];
         
         //Arrays that hold VC Ids, VC firm name, VC profile image, VC names, VC whack counts and their twitter handles from the temporary table
-        _dbmanager._vcIdsFromTemp = [[NSMutableArray alloc] init];
-        _dbmanager._vcNamesFromTemp = [[NSMutableArray alloc] init];
-        _dbmanager._vcFirmsFromTemp = [[NSMutableArray alloc] init];
-        _dbmanager._vcSnapsFromTemp = [[NSMutableArray alloc] init];
-        _dbmanager._vcWhacksFromTemp = [[NSMutableArray alloc] init];
-        _dbmanager._vcTwHandlesFromTemp = [[NSMutableArray alloc] init];
+        _dbmanager._vcIdsFromTemp = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._vcNamesFromTemp = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._vcFirmsFromTemp = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._vcSnapsFromTemp = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._vcWhacksFromTemp = [[[NSMutableArray alloc] init] autorelease];
+        _dbmanager._vcTwHandlesFromTemp = [[[NSMutableArray alloc] init] autorelease];
         
         //Since only 15 VC's are used in the game play area the for loop condition holds values from [0...14]
         for(int i=0; i<15; i++)
@@ -729,17 +731,15 @@ int _whackArrayFromTemp[15];
             if(_whackArrayFromTemp[twtagID] == 1)
             {
                 //Compose the tweet text if whack count is '1'
-                tweet = [[NSString alloc] initWithFormat:@"I just whacked %@ %d time on @WhackAVC",[_dbmanager._vcNamesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
+                tweet = [NSString stringWithFormat:@"I just whacked %@ %d time on @WhackAVC",[_dbmanager._vcNamesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
             }
             else
             {
                 //Compose the tweet text
-                tweet = [[NSString alloc] initWithFormat:@"I just whacked %@ %d times on @WhackAVC",[_dbmanager._vcNamesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
+                tweet = [NSString stringWithFormat:@"I just whacked %@ %d times on @WhackAVC",[_dbmanager._vcNamesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
             }
             
             [tweetViewController setInitialText:tweet];
-            tweet = nil;
-            [tweet release];
         }
         //Twitter handle of VC's present
         else
@@ -747,18 +747,18 @@ int _whackArrayFromTemp[15];
             NSString *tweet;
             if(_whackArrayFromTemp[twtagID] == 1)
             {
-                tweet = [[NSString alloc] initWithFormat:@"I just whacked @%@ %d time on @WhackAVC",[_dbmanager._vcTwHandlesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
+                tweet = [NSString stringWithFormat:@"I just whacked @%@ %d time on @WhackAVC",[_dbmanager._vcTwHandlesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
             }
             else
             {
-                tweet = [[NSString alloc] initWithFormat:@"I just whacked @%@ %d times on @WhackAVC",[_dbmanager._vcTwHandlesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
+//                tweet = [[NSString alloc] initWithFormat:@"I just whacked @%@ %d times on @WhackAVC",[_dbmanager._vcTwHandlesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
+                tweet = [NSString stringWithFormat:@"I just whacked @%@ %d times on @WhackAVC",[_dbmanager._vcTwHandlesFromTemp objectAtIndex:twtagID], _whackArrayFromTemp[twtagID]];
             }
             [tweetViewController setInitialText:tweet];
-            tweet = nil;
-            [tweet release];
         }
         
         [twit presentModalViewController:tweetViewController animated:YES];
+        [tweetViewController release];
         
         if ([TWTweetComposeViewController canSendTweet]) 
         {
@@ -797,6 +797,7 @@ int _whackArrayFromTemp[15];
     NSString *urlPath = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1/users/profile_image?user_id=%@&size=bigger",twUserID];
     NSURL *url = [NSURL URLWithString:urlPath];
     NSData *data = [NSData dataWithContentsOfURL:url];
+    [urlPath release];
     
     //Download the profile image to local system
     NSString *twImageName = [[NSString alloc] initWithFormat:@"%@.jpg",twUserID];
@@ -816,12 +817,15 @@ int _whackArrayFromTemp[15];
     [[[KCSClient sharedClient] currentUser] setValue:twImageName forAttribute:@"twProfileImage"];
     
     [[[KCSClient sharedClient] currentUser] saveWithDelegate:self];
+    
+    [twImageName release];
 }
 
 /*******************************************************************************************************************/
 /*                                     Facebook Delegate Methods                                                   */
 /*******************************************************************************************************************/
 
+//This method is notified when the request loads and completes successfully
 - (void)request:(FBRequest *)request didLoad:(id)result {
 
     NSDictionary* hash = result;
@@ -868,19 +872,47 @@ int _whackArrayFromTemp[15];
         [[[KCSClient sharedClient] currentUser] setValue:fbImageName forAttribute:@"fbProfileImage"];
         //Save the facebook profile image of user to BLOB service kinvey
         [KCSResourceService saveLocalResource:savedImagePath withDelegate:self];
+        
+        [fbImageName release];
     }
     
     [[[KCSClient sharedClient] currentUser] saveWithDelegate:self];
 
 }
 
-
+//This method is notified when the request receives response successfully
 - (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
 
 }
 
+//This method is notified when the request fails
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
 
+}
+
+//This delegate method is called when the user logs in to facebook
+- (void)fbDidLogin {
+    
+}
+
+//This delegate method is called when the user logs out of facebook
+- (void)fbDidLogout {
+    
+}
+
+//This delegate method is notified when the session becomes invalidated
+- (void)fbSessionInvalidated {
+    
+}
+
+- (void)fbDidExtendToken:(NSString*)accessToken
+               expiresAt:(NSDate*)expiresAt {
+    
+}
+
+//This delegate method is called when the user cancels login to facebook
+- (void)fbDidNotLogin:(BOOL)cancelled {
+    
 }
 
 /*******************************************************************************************************************/
@@ -901,6 +933,8 @@ int _whackArrayFromTemp[15];
    
 }
 
+// KINVEY SPECIFIC NOTE
+// This is the delegate called when a collection completes with successful operation
 - (void)collection:(KCSCollection *)collection didCompleteWithResult:(NSArray *)result
 {
 
@@ -913,11 +947,15 @@ int _whackArrayFromTemp[15];
     
 }
 
+// KINVEY SPECIFIC NOTE
+// This is the delegate called when a resource upload to or download from Kinvey successfully completes
 -(void)resourceServiceDidCompleteWithResult:(KCSResourceResponse *)result
 {
     
 }
 
+// KINVEY SPECIFIC NOTE
+// This is the delegate called when a resource upload to or download from Kinvey fails
 - (void)resourceServiceDidFailWithError:(NSError *)error
 {
     
@@ -932,20 +970,6 @@ int _whackArrayFromTemp[15];
     
 	// don't forget to call "super dealloc"
     
-    _dbmanager._vcIdsFromTemp = nil;
-    _dbmanager._vcNamesFromTemp = nil;
-    _dbmanager._vcFirmsFromTemp = nil;
-    _dbmanager._vcSnapsFromTemp = nil;
-    _dbmanager._vcWhacksFromTemp = nil;
-    _dbmanager._vcTwHandlesFromTemp = nil;
-    
-    [_dbmanager._vcIdsFromTemp release];
-    [_dbmanager._vcNamesFromTemp release];
-    [_dbmanager._vcFirmsFromTemp release];
-    [_dbmanager._vcSnapsFromTemp release];
-    [_dbmanager._vcWhacksFromTemp release];
-    [_dbmanager._vcTwHandlesFromTemp release];
-    
     for(int i=0;i<15;i++)
     {
         _whackCountArray[i] = 0;
@@ -956,6 +980,7 @@ int _whackArrayFromTemp[15];
     //Call to a function to close database
     [_dbmanager closeDB];
     [_dbmanager release];
+    
 	[super dealloc];
 }
 @end
