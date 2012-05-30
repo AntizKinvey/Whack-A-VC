@@ -1,0 +1,100 @@
+README
+This is a iOS game which uses Kinvey Backend Service as cloud system. All data needed for the game will be downloaded from Kinvey Backend. User information along with their picture and score will be stored over the cloud [ Kinvey Backend]. 
+Softwares Used –
+Mac OS – 10.7
+iPhone SDK – 4.2
+iOS – 5.0 and later
+Kinvey iOS library – 1.3.0 
+Integration - 
+To integrate Kinvey Backend with iOS project please follow the links below –
+To Download -
+https://console.kinvey.com/#downloads 
+Documentation –
+https://console.kinvey.com/#docs/iOS/iOS-Getting-Started
+API Reference – 
+https://console.kinvey.com/API/iOS-API-docs/index.html 
+WhackAVC project With Kinvey BackEnd –
+KinveyKit.framework is dragged into the project., supported frameworks are included as suggested in  documentation provided in the above link.
+Airship folder is included in project directory, include the library which is in Airship folder into the project.
+Kinvey header file is included by adding 
+#import <KinveyKit/ KinveyKit.h> in below files –
+HelloWorldLayer.h, KCSPhrases.h, KCSBlobDetails.h, KCSWhacks.h, KCSVCDetails.h, GameOverLayer.h
+
+
+To download resources from Kinvey Backend  - 
+File – GameOverLayer.m
+ API – KCSResourceService downloadResource
+On success, Delegate method – resourceServiceDidCompleteWithResult
+On failure Delegate method – resourceServiceDidFailWithErro
+To save appdata [Whack count of each VC ]  - 
+File – GameOverLayer.m
+ API – SaveToCollection
+On success, Delegate method – operationDidCompleteWithResult
+On failure Delegate method – operationDidFailWithError
+On clicking of twitter or facebook, user details with profile picture will be saved to Kinvey bsckend –
+File – GameOverLayer.m
+API – saveLocalResouce
+ On success, Delegate method – resourceServiceDidCompleteWithResult
+On failure Delegate method – resourceServiceDidFailWithError
+Fetching appdata:
+File -  HelloWorldLayer.m
+API – fetchAllWithDelegate
+On success, Delegate method – didCompleteWithResult
+On failure Delegate method – didFailWithError
+
+Collections
+All collections are created as per the design document Whack_A_VC_KinveyBackend_Connectivity_Design-v2.0.docx  included within the repository.
+
+ 
+Local cache concept –
+Tables
+Following tables will be created on SqLite DB with structure defined.
+1. Metadata
+Resource_id
+Resource_name
+lastModifiedTime
+
+2. PhraseList
+id
+phrase
+3. WhackList
+id
+vc_id
+whack_count
+vc_kinveyID
+4. AudioList
+id
+file_path
+5. VCList
+id
+Kinvey_VC_id
+Name
+Firm
+Path_photo_game
+Path_photo_profile
+Twitter_handle
+Interaction
+Interaction between Local table and Kinvey Collections is as below -
+Note : Local ------------------------------ Kinvey End
+1. Metadata <---------------> metadata 
+Resources will be downloaded from Kinvey backend and stored locally as below –
+1. At the first time before connecting to Kinvey, following number files will be present locally – 
+Whack sounds - 2
+VC images - 15 X 2 
+phrases – 5
+2. Images and audio files will be downloaded to device and there name and last modified time will be stored to MetaData table.
+3. Audio file’s path will be stored to AudioList table to fetch from locally.
+4. Each time before downloading resource, name will be compared between Kinvey’s end and local table, if file doesn’t exists file will be downloaded else  lastModified time will be compared , if value at Kinvey’s end is later than local, file will be downloaded else it will be skipped.
+2. PhraseList <--------------------> phrases
+Phrases will be downloaded and stored to PhraseList table.
+3. VCList <------------------------> VC-Details
+1. At the first time before connecting to Kinvey, 20 VCs details will be present in the device.
+2. App data will be downloaded from Kinvey from VC-Detaills collection and uploaded into VCList locally.
+3. Number of rows of local table will be compared  with number of objects downloaded as appdata from Kinve backend, if they are equal, time stamp will be compared. If Kinvey’s value is later than local, then vc images will be downloaded and Metadata and VCList tables will be updated.
+4. If there are more rows in Kinvey than local, all will be downloaded and inserted into Metadata and VClist tables. 
+4. WhackList <--------------------------> VCList
+1. WhackList table is dependent on VCList table[local].
+2. Whack count of VCs which will come on gameplay , will be entered into WhackList table with their Kinvey ID.
+3. This table will be used to update on whacks collection once user connect to Network from offline.
+Use this project to learn how to use Kinvey Backend with iOS app.
+Good Luck
