@@ -17,7 +17,7 @@
 #import "FBConnect.h"
 #import "TwitterViewController.h"
 
-@interface GameOverLayer : CCLayer<KCSCollectionDelegate, KCSPersistableDelegate, FBSessionDelegate, FBDialogDelegate, FBRequestDelegate, KCSResourceDelegate>
+@interface GameOverLayer : CCLayer<KCSPersistableDelegate, FBSessionDelegate, FBDialogDelegate, FBRequestDelegate, KCSResourceDelegate>
 {
     DBManager *_dbmanager;
     

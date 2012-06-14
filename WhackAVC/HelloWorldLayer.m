@@ -644,19 +644,23 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
 // This is the delegate notified when a fetch fails
 - (void)entity:(id<KCSPersistable>)entity fetchDidFailWithError:(NSError *)error
 {
-    
+    [[[KCSClient sharedClient] currentUser] loadWithDelegate:self];
+    NSLog(@"%@",[error localizedDescription]);
+    NSLog(@"%@",[error localizedFailureReason]);
 }
 
 // KINVEY SPECIFIC NOTE
 // This is the delegate notified when a save completes
 - (void)entity:(id<KCSPersistable>)entity operationDidCompleteWithResult:(NSObject *)result{
-
+    NSLog(@"\nEntity save operation completed successfully");
 }
 
 // KINVEY SPECIFIC NOTE
 // This is the delegate notified when a save fails
 - (void)entity:(id)entity operationDidFailWithError:(NSError *)error{
-    
+    NSLog(@"\nEntity save operation failed");
+    NSLog(@"%@",[error localizedDescription]);
+    NSLog(@"%@",[error localizedFailureReason]);
 }
 
 // KINVEY SPECIFIC NOTE
@@ -818,7 +822,9 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
 // KINVEY SPECIFIC NOTE
 // This is the delegate called when a collection fetch fails
 - (void)collection:(KCSCollection *)collection didFailWithError:(NSError *)error{
-
+    NSLog(@"\nCollection fetch failed");
+    NSLog(@"%@",[error localizedDescription]);
+    NSLog(@"%@",[error localizedFailureReason]);
 }
 
 // KINVEY SPECIFIC NOTE
@@ -955,7 +961,9 @@ int _noOfResourcesDownloaded = 0;//To detect number of resources that are downlo
 // This is the delegate notified when a resource operation fails
 - (void)resourceServiceDidFailWithError:(NSError *)error
 {
-    
+    NSLog(@"\nResource save failed");
+    NSLog(@"%@",[error localizedDescription]);
+    NSLog(@"%@",[error localizedFailureReason]);
 }
 
 /*******************************************************************************************************************/

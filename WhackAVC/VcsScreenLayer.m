@@ -901,37 +901,37 @@ int _noOfElementsInAllVCs = 0;
 
 //This method is notified when the request receives response successfully
 - (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response {
-
+    NSLog(@"\nRequest received response successfully");
 }
 
 //This method is notified when the request fails
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
-
+    NSLog(@"\nRequest failed with error");
 }
 
 //This delegate method is called when the user logs in to facebook
 - (void)fbDidLogin {
-
+    NSLog(@"\nUser logged in to facebook");
 }
 
 //This delegate method is called when the user logs out of facebook
 - (void)fbDidLogout {
-    
+    NSLog(@"\nUser logged out of facebook");
 }
 
 //This delegate method is notified when the session becomes invalidated
 - (void)fbSessionInvalidated {
-    
+    NSLog(@"\nFacebook session Invalidated");
 }
 
 - (void)fbDidExtendToken:(NSString*)accessToken
                expiresAt:(NSDate*)expiresAt {
-    
+    NSLog(@"\nExtend access token");
 }
 
 //This delegate method is called when the user cancels login to facebook
 - (void)fbDidNotLogin:(BOOL)cancelled {
-    
+    NSLog(@"\nUser not logged in to facebook");
 }
 
 /*******************************************************************************************************************/
@@ -941,42 +941,35 @@ int _noOfElementsInAllVCs = 0;
 // KINVEY SPECIFIC NOTE
 // This is the delegate method notified when a save completes
 - (void)entity:(id<KCSPersistable>)entity operationDidCompleteWithResult:(NSObject *)result{
-    
-    
+    NSLog(@"\n\nEntity Operation Save Success");
 }
 
 // KINVEY SPECIFIC NOTE
 // This is the delegate notified when a save fails
 - (void)entity:(id)entity operationDidFailWithError:(NSError *)error{
-    
-    
-}
-
-// KINVEY SPECIFIC NOTE
-// This is the delegate called when a collection completes with successful operation
-- (void)collection:(KCSCollection *)collection didCompleteWithResult:(NSArray *)result
-{
-    
-}
-
-// KINVEY SPECIFIC NOTE
-// This is the delegate called when a collection fetch fails
-- (void)collection:(KCSCollection *)collection didFailWithError:(NSError *)error{
-    
-    
+    NSLog(@"\n\nEntity Operation Save Failed");
+    NSString *className = NSStringFromClass([entity class]); 
+    if([className isEqualToString:@"KCSUser"])
+    {
+        [[[KCSClient sharedClient] currentUser] saveWithDelegate:self];
+    }
+    NSLog(@"%@",[error localizedDescription]);
+    NSLog(@"%@",[error localizedFailureReason]);
 }
 
 // KINVEY SPECIFIC NOTE
 // This is the delegate called when a resource upload to or download from Kinvey successfully completes
 -(void)resourceServiceDidCompleteWithResult:(KCSResourceResponse *)result
 {
-    
+    NSLog(@"\nResource Save Successful");
 }
 // KINVEY SPECIFIC NOTE
 // This is the delegate called when a resource upload to or download from Kinvey fails
 - (void)resourceServiceDidFailWithError:(NSError *)error
 {
-    
+    NSLog(@"\nResource Save Failed");
+    NSLog(@"%@",[error localizedDescription]);
+    NSLog(@"%@",[error localizedFailureReason]);
 }
 
 // on "dealloc" you need to release all your retained objects

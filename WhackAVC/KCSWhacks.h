@@ -12,7 +12,10 @@
 
 @interface KCSWhacks : NSObject <KCSPersistable>
 {
-    
+    NSString *whacksID;
+    NSString *userID;
+    NSString *vcID;
+    NSString *whackCount;
 }
 
 @property (nonatomic, retain) NSString *whacksID;

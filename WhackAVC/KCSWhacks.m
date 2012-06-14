@@ -78,10 +78,10 @@
 
 // KINVEY USAGE NOTE
 //Save an Entity into KCS for a given KCS client and register a delegate to notify when complete.
-- (void)saveToCollection:(KCSCollection *)collection withDelegate:(id<KCSPersistableDelegate>)delegate
-{
-    
-}
+//- (void)saveToCollection:(KCSCollection *)collection withDelegate:(id<KCSPersistableDelegate>)delegate
+//{
+//
+//}
 
 // KINVEY USAGE NOTE
 //Delete an entity from Kinvey and register a delegate for notification
